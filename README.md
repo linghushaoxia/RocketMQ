@@ -49,5 +49,9 @@ It offers a variety of features as follows:
 We are always very happy to have contributions, whether for trivial cleanups,big new features or other material rewards. more details see [here](https://github.com/alibaba/RocketMQ/wiki/how-to-be) 
  
 ----------
+## 在celipse中启动Namesrv
+
+找到com.alibaba.rocketmq.namesrv.NamesrvStartup,运行main方法即可。
+
 ## License
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html) Copyright (C) 2010-2013 Alibaba Group Holding Limited
