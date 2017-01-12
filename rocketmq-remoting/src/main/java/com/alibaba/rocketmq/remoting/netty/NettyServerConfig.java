@@ -158,4 +158,24 @@ public class NettyServerConfig implements Cloneable {
     public Object clone() throws CloneNotSupportedException {
         return (NettyServerConfig) super.clone();
     }
+
+
+    @Override
+    public String toString() {
+	return "NettyServerConfig [listenPort=" + listenPort
+		+ ",\nserverWorkerThreads=" + serverWorkerThreads
+		+ ",\nserverCallbackExecutorThreads="
+		+ serverCallbackExecutorThreads + ",\nserverSelectorThreads="
+		+ serverSelectorThreads + ",\nserverOnewaySemaphoreValue="
+		+ serverOnewaySemaphoreValue + ",\nserverAsyncSemaphoreValue="
+		+ serverAsyncSemaphoreValue
+		+ ",\nserverChannelMaxIdleTimeSeconds="
+		+ serverChannelMaxIdleTimeSeconds
+		+ ",\nserverSocketSndBufSize=" + serverSocketSndBufSize
+		+ ",\nserverSocketRcvBufSize=" + serverSocketRcvBufSize
+		+ ",\nserverPooledByteBufAllocatorEnable="
+		+ serverPooledByteBufAllocatorEnable
+		+ ",\nuseEpollNativeSelector=" + useEpollNativeSelector + "]";
+    }
+    
 }

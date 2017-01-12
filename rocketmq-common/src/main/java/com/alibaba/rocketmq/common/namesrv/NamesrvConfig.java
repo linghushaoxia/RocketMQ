@@ -41,7 +41,7 @@ public class NamesrvConfig {
     private String productEnvName = "center";
     private boolean clusterTest = false;
     private boolean orderMessageEnable = false;
-
+   
     public boolean isOrderMessageEnable() {
         return orderMessageEnable;
     }
