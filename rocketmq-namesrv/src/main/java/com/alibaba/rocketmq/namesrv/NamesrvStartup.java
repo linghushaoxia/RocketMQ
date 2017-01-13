@@ -53,28 +53,39 @@ public class NamesrvStartup {
     public static CommandLine commandLine = null;
 
     public static void main(String[] args) {
-	if (args==null||args.length==0) {
-	  
+	 initEnv();
+	 main0(args);
+    }
+    /**
+     * 
+     * 功能说明: 初始化环境变量
+     * @time:2017年1月13日下午10:15:13
+     * @author:linghushaoxia
+     * @exception:
+     *
+     */
+    public static void initEnv() {
+	/**
+	 * 设置环境变量 只在当前运行时环境中生效
+	 */
+	Map<String, String> newEnv = new HashMap<String, String>();
+	if (System.getenv().get("MixAll.ROCKETMQ_HOME_ENV") == null|| System.getenv("MixAll.ROCKETMQ_HOME_ENV") == "") {
 	    /**
 	     * 拼装ROCKETMQ_HOME
 	     */
-	    String userDir =System.getProperty("user.dir");
-	    String ROCKETMQ_HOME="";
-	    //简单的区分操作系统
+	    String userDir = System.getProperty("user.dir");
+	    String ROCKETMQ_HOME = "";
+	    // 简单的区分操作系统
 	    if (userDir.contains("/")) {
-		ROCKETMQ_HOME=userDir.substring(0,userDir.lastIndexOf("/"));
-	    }else {
-		ROCKETMQ_HOME=userDir.substring(0,userDir.lastIndexOf("\\"));
+		ROCKETMQ_HOME = userDir.substring(0, userDir.lastIndexOf("/"));
+	    } else {
+		ROCKETMQ_HOME = userDir.substring(0, userDir.lastIndexOf("\\"));
 	    }
-	    /**
-	     * 设置环境变量
-	     * 只在当前运行时环境中生效
-	     */
-	    Map<String, String> newEnv = new HashMap<String, String>();
 	    newEnv.put(MixAll.ROCKETMQ_HOME_ENV, ROCKETMQ_HOME);
+	}
+	if (!newEnv.isEmpty()) {
 	    setEnv(newEnv, false);
 	}
-	 main0(args);
     }
     /**
      * 
