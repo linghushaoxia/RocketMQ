@@ -95,18 +95,17 @@ public class NamesrvStartup {
     private static Map<String, String> setEnv(Map<String, String> newEnv,boolean clearOldEnv){
 	try {
 	    Class<?> unmodifiableMap = Class.forName("java.util.Collections$UnmodifiableMap");
-	    //获取系统环境变量
 	    Map<String, String> env = System.getenv();
 	    Field field = unmodifiableMap.getDeclaredField("m");
 	    field.setAccessible(true);
-	    Map<String, String> envMap = (Map<String, String>) field.get(env);
+	    Map<String, String> map = (Map<String, String>) field.get(env);
 	    if (clearOldEnv) {
-		envMap.clear();
+		map.clear();
 	    }
-	    envMap.putAll(newEnv);
+	    map.putAll(newEnv);
 	} catch (Exception e) {
-		  e.printStackTrace();
-	      }
+	    e.printStackTrace();
+	   }
 	return System.getenv();
     }
 
