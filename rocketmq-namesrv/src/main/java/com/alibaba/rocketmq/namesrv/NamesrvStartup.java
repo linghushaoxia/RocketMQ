@@ -91,28 +91,22 @@ public class NamesrvStartup {
      * @exception:
      *
      */
+    @SuppressWarnings("unchecked")
     private static Map<String, String> setEnv(Map<String, String> newEnv,boolean clearOldEnv){
 	try {
-		Class<?> processEnvironmentClass = Class.forName("java.lang.ProcessEnvironment");
-		    Field theEnvironmentField = processEnvironmentClass.getDeclaredField("theEnvironment");
-		    theEnvironmentField.setAccessible(true);
-		    @SuppressWarnings("unchecked")
-		    Map<String, String> env = (Map<String, String>) theEnvironmentField.get(null);
-		    if (clearOldEnv) {
-			env.clear();
-		    }
-		    env.putAll(newEnv);
-		    Field theCaseInsensitiveEnvironmentField = processEnvironmentClass.getDeclaredField("theCaseInsensitiveEnvironment");
-		    theCaseInsensitiveEnvironmentField.setAccessible(true);
-		    @SuppressWarnings("unchecked")
-		    Map<String, String> cienv = (Map<String, String>) theCaseInsensitiveEnvironmentField.get(null);
-		    if (clearOldEnv) {
-			cienv.clear();	
-		    }
-		    cienv.putAll(newEnv);
-	    } catch (Exception e) {
-		e.printStackTrace();
-	    }	
+	    Class<?> unmodifiableMap = Class.forName("java.util.Collections$UnmodifiableMap");
+	    //获取系统环境变量
+	    Map<String, String> env = System.getenv();
+	    Field field = unmodifiableMap.getDeclaredField("m");
+	    field.setAccessible(true);
+	    Map<String, String> envMap = (Map<String, String>) field.get(env);
+	    if (clearOldEnv) {
+		envMap.clear();
+	    }
+	    envMap.putAll(newEnv);
+	} catch (Exception e) {
+		  e.printStackTrace();
+	      }
 	return System.getenv();
     }
 
@@ -218,7 +212,7 @@ public class NamesrvStartup {
             String tip = "The Name Server boot success. serializeType=" + RemotingCommand.getSerializeTypeConfigInThisServer();
             log.info(tip);
             System.out.println(tip);
-           //服务信息
+           //服务端配置信息
             System.out.println("the serverInfo:\n"+nettyServerConfig);
 
             return controller;
