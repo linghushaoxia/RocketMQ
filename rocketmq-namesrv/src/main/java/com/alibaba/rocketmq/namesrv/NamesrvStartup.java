@@ -67,6 +67,7 @@ public class NamesrvStartup {
     public static void initEnv() {
 	/**
 	 * 设置环境变量 只在当前运行时环境中生效
+	 * 仅便于IDE调试使用
 	 */
 	Map<String, String> newEnv = new HashMap<String, String>();
 	if (System.getenv().get("MixAll.ROCKETMQ_HOME_ENV") == null|| System.getenv("MixAll.ROCKETMQ_HOME_ENV") == "") {
@@ -81,6 +82,7 @@ public class NamesrvStartup {
 	    } else {
 		ROCKETMQ_HOME = userDir.substring(0, userDir.lastIndexOf("\\"));
 	    }
+	    System.out.println("检测到未设置"+MixAll.ROCKETMQ_HOME_ENV+"环境变量,采用默认配置:"+ROCKETMQ_HOME);
 	    newEnv.put(MixAll.ROCKETMQ_HOME_ENV, ROCKETMQ_HOME);
 	}
 	if (!newEnv.isEmpty()) {
