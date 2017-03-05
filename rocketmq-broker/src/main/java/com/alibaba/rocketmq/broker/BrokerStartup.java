@@ -18,6 +18,7 @@ package com.alibaba.rocketmq.broker;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
+
 import com.alibaba.rocketmq.common.BrokerConfig;
 import com.alibaba.rocketmq.common.MQVersion;
 import com.alibaba.rocketmq.common.MixAll;
@@ -30,6 +31,8 @@ import com.alibaba.rocketmq.remoting.protocol.RemotingCommand;
 import com.alibaba.rocketmq.srvutil.ServerUtil;
 import com.alibaba.rocketmq.store.config.BrokerRole;
 import com.alibaba.rocketmq.store.config.MessageStoreConfig;
+import com.linghushaoxia.rocketmq.tools.env.EnvUtil;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
@@ -54,6 +57,8 @@ public class BrokerStartup {
     public static Logger log;
 
     public static void main(String[] args) {
+	//初始化环境变量
+	EnvUtil.initEnv();
         start(createBrokerController(args));
     }
 

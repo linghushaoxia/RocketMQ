@@ -29,13 +29,13 @@ import java.util.List;
 public class Consumer {
 
     public static void main(String[] args) throws InterruptedException, MQClientException {
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("please_rename_unique_group_name_4");
+        DefaultMQPushConsumer pushConsumer = new DefaultMQPushConsumer("pushConsumerTest");
 
-        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
+        pushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
+        pushConsumer.setNamesrvAddr("localhost:9876");
+        pushConsumer.subscribe("TopicTest", "*");
 
-        consumer.subscribe("TopicTest", "*");
-
-        consumer.registerMessageListener(new MessageListenerConcurrently() {
+        pushConsumer.registerMessageListener(new MessageListenerConcurrently() {
 
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
@@ -45,7 +45,7 @@ public class Consumer {
             }
         });
 
-        consumer.start();
+        pushConsumer.start();
 
         System.out.println("Consumer Started.");
     }
